@@ -1,10 +1,10 @@
 {
-  "name": "lib-jitsi-meet",
-  "version": "0.0.0",
+  "name": "@medme/lib-jitsi-meet",
+  "version": "1.0.0",
   "description": "JS library for accessing Jitsi server side deployments",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jitsi/lib-jitsi-meet"
+    "url": "git://github.com/GbookingLTD/lib-jitsi-meet.git"
   },
   "keywords": [
     "jingle",
@@ -14,7 +14,6 @@
     "jitsi"
   ],
   "author": "",
-  "readmeFilename": "README.md",
   "dependencies": {
     "@jitsi/js-utils": "1.0.2",
     "@jitsi/sdp-interop": "1.0.3",
@@ -70,5 +69,12 @@
     "watch": "webpack --config webpack.config.js --watch --mode development"
   },
   "main": "./index.js",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GbookingLTD/lib-jitsi-meet/issues"
+  },
+  "homepage": "https://github.com/GbookingLTD/lib-jitsi-meet#readme",
+  "directories": {
+    "doc": "doc"
+  }
 }
