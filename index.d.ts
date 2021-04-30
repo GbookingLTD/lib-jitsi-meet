@@ -175,7 +175,7 @@ declare module '@medme/lib-jitsi-meet/JitsiConference' {
        */
       private _conferenceJoinAnalyticsEventSent;
       _e2eEncryption: E2EEncryption;
-      constructor(options: any): void;
+      constructor(options: any);
       _init(options?: {
           connection: any;
       }): void;
@@ -201,7 +201,7 @@ declare module '@medme/lib-jitsi-meet/JitsiConference' {
        */
       jvb121Status: Jvb121EventGenerator;
       p2pDominantSpeakerDetection: P2PDominantSpeakerDetection;
-      join(password: string): void;
+      join(password?: string): void;
       authenticateAndUpgradeRole(options: any): any;
       isJoined(): any;
       isP2PEnabled(): boolean;
@@ -1197,9 +1197,9 @@ declare module '@medme/lib-jitsi-meet/JitsiParticipant' {
       /**
        * Returns a set with the features for the participant.
        * @param {int} timeout the timeout in ms for reply from the participant.
-       * @returns {Promise<Set<String>, Error>}
+       * @returns {Promise<Set<String>>}
        */
-      getFeatures(timeout?: any): Promise<Set<string>, Error>;
+      getFeatures(timeout?: any): Promise<Set<string>>;
       _getFeaturesPromise: any;
       /**
        * Returns the bot type for the participant.
@@ -1265,7 +1265,7 @@ declare module '@medme/lib-jitsi-meet/JitsiTrackError' {
       name: string;
       message: any;
       stack: any;
-      constructor(error: any | string, options: any, devices: any): void;
+      constructor(error: any | string, options: any, devices: any);
   }
 
 }
@@ -1435,6 +1435,10 @@ declare module '@medme/lib-jitsi-meet/authenticateAndUpgradeRole' {
    */
   export default function authenticateAndUpgradeRole({ id, password, onCreateResource, onLoginSuccessful, roomPassword }: {
       id: string;
+      password?: string;
+      onCreateResource?: string; 
+      onLoginSuccessful?: string;
+      roomPassword?: string;
   }): any;
   export type UpgradeRoleError = {
       /**
@@ -1516,7 +1520,7 @@ declare module '@medme/lib-jitsi-meet/modules/RTC/BridgeChannel' {
        * @param {EventEmitter} emitter the EventEmitter instance to use for event emission.
        * @param {function} senderVideoConstraintsChanged callback to call when the sender video constraints change.
        */
-      constructor(peerconnection?: RTCPeerConnection, wsUrl?: string, emitter: any, senderVideoConstraintsChanged: Function);
+      constructor(peerconnection?: RTCPeerConnection, wsUrl?: string, emitter?: any, senderVideoConstraintsChanged?: Function);
       _channel: any;
       _eventEmitter: any;
       _mode: string;
@@ -1654,6 +1658,7 @@ declare module '@medme/lib-jitsi-meet/modules/RTC/JitsiLocalTrack' {
           deviceId: any;
           facingMode: any;
           sourceId: any;
+          sourceType: any;
       });
       _setEffectInProgress: boolean;
       /**
@@ -3167,7 +3172,7 @@ declare module '@medme/lib-jitsi-meet/modules/RTC/ScreenObtainer' {
        */
       function obtainScreenOnElectron(options?: {
           desktopSharingSources?: string[];
-      }, onSuccess: any, onFailure: any): void;
+      }, onSuccess?: any, onFailure?: any): void;
       /**
        * Obtains a screen capture stream on Electron.
        *
@@ -3180,7 +3185,7 @@ declare module '@medme/lib-jitsi-meet/modules/RTC/ScreenObtainer' {
        */
       function obtainScreenOnElectron(options?: {
           desktopSharingSources?: string[];
-      }, onSuccess: any, onFailure: any): void;
+      }, onSuccess?: any, onFailure?: any): void;
       /**
        * Obtains a screen capture stream using getDisplayMedia.
        *
@@ -3638,7 +3643,7 @@ declare module '@medme/lib-jitsi-meet/modules/RTC/TraceablePeerConnection' {
       _createRemoteTrack(ownerEndpointId: string, stream: MediaStream, track: MediaStreamTrack, mediaType: typeof MediaType, videoType?: {
           CAMERA: string;
           DESKTOP: string;
-      }, ssrc: number, muted: boolean): void;
+      }, ssrc?: number, muted?: boolean): void;
       _remoteStreamRemoved(stream: any): void;
       _remoteTrackRemoved(stream: MediaStream, track: MediaStreamTrack): void;
       private _getRemoteTrackById;
@@ -4086,7 +4091,7 @@ declare module '@medme/lib-jitsi-meet/modules/connectivity/NetworkInfo' {
        * Updates the network info state.
        * @param {boolean} isOnline - {@code true} if internet is online or {@code false} otherwise.
        */
-      updateNetworkInfo({ isOnline }: boolean): void;
+      updateNetworkInfo({ isOnline }: { isOnline: boolean }): void;
       /**
        * Returns the online/offline internet status. By default the value is {@code true} and changes only if
        * the lib's user wires the state through {@link JitsiMeetJS.setNetworkInfo} like the jitsi-meet does. Because of
@@ -4829,7 +4834,7 @@ declare module '@medme/lib-jitsi-meet/modules/detection/VADAudioAnalyser' {
        */
       _trackRemoved(track: any): void;
   }
-  import { EventEmitter } from "node/events";
+  import { EventEmitter } from "events";
   import TrackVADEmitter from "@medme/lib-jitsi-meet/modules/detection/TrackVADEmitter";
 
 }
@@ -4912,7 +4917,7 @@ declare module '@medme/lib-jitsi-meet/modules/detection/VADNoiseDetection' {
       }): void;
       _processTimeout: NodeJS.Timeout;
   }
-  import { EventEmitter } from "node/events";
+  import { EventEmitter } from "events";
 
 }
 declare module '@medme/lib-jitsi-meet/modules/detection/VADReportingService' {
@@ -5077,7 +5082,7 @@ declare module '@medme/lib-jitsi-meet/modules/detection/VADTalkMutedDetection' {
        */
       reset(): void;
   }
-  import { EventEmitter } from "node/events";
+  import { EventEmitter } from "events";
 
 }
 declare module '@medme/lib-jitsi-meet/modules/e2ee/Context' {
@@ -6150,7 +6155,8 @@ declare module '@medme/lib-jitsi-meet/modules/recording/JibriSession' {
        * streaming service provider.
        * @returns Object - The XMPP IQ message.
        */
-      _createIQ({ action, appData, broadcastId, focusMucJid, streamId }: string): any;
+      _createIQ({ action, appData, broadcastId, focusMucJid, streamId }: 
+          { action: string, appData: string, broadcastId: string, focusMucJid: string, streamId: string }): any;
       /**
        * Handles the error from an iq and stores the error.
        *
@@ -6405,6 +6411,7 @@ declare module '@medme/lib-jitsi-meet/modules/settings/Settings' {
        */
       export function init(externalStorage: Storage): void;
   }
+  import { jitsiLocalStorage } from '@jitsi/js-utils';
   export default _default;
 
 }
@@ -6598,7 +6605,7 @@ declare module '@medme/lib-jitsi-meet/modules/statistics/AudioOutputProblemDetec
        * @param {number} audioLevel - The average audio level value.
        * @returns {void}
        */
-      _onRemoteAudioLevelReceived(userID: string, { avgAudioLevels }: number): void;
+      _onRemoteAudioLevelReceived(userID: string, { avgAudioLevels }: { avgAudioLevels: number }): void;
       /**
        * Clears the data stored for a participant.
        *
@@ -8615,14 +8622,14 @@ declare module '@medme/lib-jitsi-meet/modules/xmpp/Caps' {
        * @param {int} timeout the timeout in ms for reply from the participant.
        * @returns {Promise<Set<String>, Error>}
        */
-      getFeatures(jid: string, timeout?: any): Promise<Set<string>, Error>;
+      getFeatures(jid: string, timeout?: any): Promise<Set<string>>;
       /**
        * Returns a set with the features for a host.
        * @param {String} jid the jid of the host
        * @param {int} timeout the timeout in ms for reply from the host.
        * @returns {Promise<Set<String>, Error>}
        */
-      getFeaturesAndIdentities(jid: string, node: any, timeout?: any): Promise<Set<string>, Error>;
+      getFeaturesAndIdentities(jid: string, node: any, timeout?: any): Promise<Set<string>>;
       /**
        * Returns a set with the features and identities for a host.
        * @param {String} jid the jid of the host
@@ -11072,7 +11079,7 @@ declare module '@medme/lib-jitsi-meet/modules/xmpp/XmppConnection' {
        * @param {number} timeout - How long to wait for the response. The time when the connection is reconnecting is
        * included, which means that the IQ may never be sent and still fail with a timeout.
        */
-      sendIQ2(iq: Element, { timeout }: number): Promise<any>;
+      sendIQ2(iq: Element, { timeout }: { timeout: number }): Promise<any>;
       /**
        * Called by the ping plugin when ping fails too many times.
        *
@@ -12299,5 +12306,6 @@ declare module '@medme/lib-jitsi-meet/service/xmpp/XMPPEvents' {
 }
 declare module '@medme/lib-jitsi-meet' {
   import main = require('@medme/lib-jitsi-meet/lib-jitsi-meet.min.js');
+  //const main: any;
   export = main;
 }
